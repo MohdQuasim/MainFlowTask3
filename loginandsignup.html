@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup/Login Page</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #ff4c60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e04355;
+        }
+
+        .toggle-btn {
+            margin-top: 10px;
+            color: #333;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <!-- Signup Form -->
+        <form id="signupForm" action="signup.php" method="POST" style="display: none;" onsubmit="return validateSignupForm()">
+            <h2>Sign Up</h2>
+            <input type="text" id="signupUsername" name="username" placeholder="Username" required>
+            <input type="email" id="signupEmail" name="email" placeholder="Email" required>
+            <input type="password" id="signupPassword" name="password" placeholder="Password" required>
+            <input type="password" id="signupConfirmPassword" name="confirm_password" placeholder="Confirm Password" required>
+            <button type="submit">Sign Up</button>
+            <p id="signupMessage" style="color: red;"></p>
+            <p class="toggle-btn" onclick="toggleForms()">Already have an account? Login here</p>
+        </form>
+
+        <!-- Login Form -->
+        <form id="loginForm" action="login.php" method="POST" onsubmit="return validateLoginForm()">
+            <h2>Login</h2>
+            <input type="text" id="loginUsername" name="username" placeholder="Username" required>
+            <input type="password" id="loginPassword" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <p id="loginMessage" style="color: red;"></p>
+            <p class="toggle-btn" onclick="toggleForms()">Don't have an account? Sign up here</p>
+        </form>
+    </div>
+
+    <script>
+        // Function to toggle between Signup and Login forms
+        function toggleForms() {
+            const signupForm = document.getElementById("signupForm");
+            const loginForm = document.getElementById("loginForm");
+            if (signupForm.style.display === "none") {
+                signupForm.style.display = "block";
+                loginForm.style.display = "none";
+            } else {
+                signupForm.style.display = "none";
+                loginForm.style.display = "block";
+            }
+        }
+
+        // Initial display of forms: show login form by default
+        document.getElementById("loginForm").style.display = "block";
+        document.getElementById("signupForm").style.display = "none";
+
+        // Signup form validation
+        function validateSignupForm() {
+            const password = document.getElementById("signupPassword").value;
+            const confirmPassword = document.getElementById("signupConfirmPassword").value;
+            const signupMessage = document.getElementById("signupMessage");
+
+            if (password !== confirmPassword) {
+                signupMessage.textContent = "Passwords do not match.";
+                return false;
+            }
+
+            signupMessage.textContent = "";
+            return true;
+        }
+
+        // Login form validation
+        function validateLoginForm() {
+            const loginMessage = document.getElementById("loginMessage");
+            loginMessage.textContent = ""; // Clear any previous messages
+            return true;
+        }
+    </script>
+</body>
+</html>
